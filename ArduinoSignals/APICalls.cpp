@@ -208,7 +208,7 @@ double PaperSignals::GetEthereum()
     return change;
 }
 
-void PaperSignals::CryptoCurrencyExecution(String JSONData)
+void PaperSignals::Recycle(String JSONData)
 {
     String Bitcoin = "Bitcoin";
     String Ethereum = "Ethereum";

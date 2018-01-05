@@ -208,7 +208,7 @@ double PaperSignals::GetEthereum()
     return change;
 }
 
-void PaperSignals::Recycle(String JSONData)
+void PaperSignals::Track(String JSONData)
 {
     String Bitcoin = "Bitcoin";
     String Ethereum = "Ethereum";
@@ -658,7 +658,7 @@ void PaperSignals::StockExecution(String JSONData)
   }
 }
 
-void PaperSignals::CustomExecution(String JSONData)
+void PaperSignals::Recycle(String JSONData)
 {
   DynamicJsonBuffer customIntentBuffer;
   JsonObject& customIntentRoot = customIntentBuffer.parseObject(JSONData);

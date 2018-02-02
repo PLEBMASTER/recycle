@@ -658,7 +658,68 @@ void PaperSignals::StockExecution(String JSONData)
   }
 }
 
-void PaperSignals::Recycle(String JSONData)
+double PaperSignals::GetIt()
+{
+    char* host = "api.coinmarketcap.com";
+    String url = "/v1/ticker/bitcoin/";
+
+    String payload = getJson(host, url);
+
+    String unPretty = makeLessPrettyJSON(payload);
+
+    DynamicJsonBuffer jsonBuffer;
+    JsonObject& root = jsonBuffer.parseObject(unPretty);
+
+    // Test if parsing succeeds.
+    if (!root.success()) {
+      Serial.println("parseObject() failed");
+    }
+
+    double change = root[String("percent_change_24h")];
+
+    return change;
+}
+
+void PaperSignals::recycle(String JSONData)
+{
+    String Thumbs = "Thumbs";
+
+    DynamicJsonBuffer cryptoBuffer;
+    JsonObject& cryptoRoot = cryptoBuffer.parseObject(JSONData);
+    String CurrencyType = cryptoRoot["parameters"]["Crypto"];
+
+    if(CurrencyType == Thumbs)
+    {
+      Serial.println("Activate Thumbs");
+      double curChange = GetIt();
+      Serial.println(curChange);
+
+      if(curChange < 0)
+      {
+         Serial.println("Activating...");
+         MoveServoToPosition(RECYCLE_USED, 10);
+      }
+      else if(curChange > 0)
+      {
+        Serial.println("Activating...");
+        MoveServoToPosition(RECYCLE_USED, 10);
+      }
+      else
+      {
+        Serial.println("Activating...");
+        MoveServoToPosition(RECYCLE_USED, 10);
+      }
+    }
+
+    else
+    {
+      Serial.println("Currency not supported");
+      return;
+    }
+
+
+}
+void PaperSignals::decycle(String JSONData)
 {
   DynamicJsonBuffer customIntentBuffer;
   JsonObject& customIntentRoot = customIntentBuffer.parseObject(JSONData);
@@ -666,6 +727,7 @@ void PaperSignals::Recycle(String JSONData)
 
   Serial.print("Current Custom Parameter Data: "); Serial.println(customIntentData);
 }
+
 
 void PaperSignals::ParseIntentName(String intentName, String JSONData)
 {

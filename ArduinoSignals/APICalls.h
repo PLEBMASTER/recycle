@@ -54,6 +54,11 @@ limitations under the License.
 #define ROCKET_LAUNCH 0
 #define ROCKET_NOT_LAUNCHED 65
 
+// Recycle
+#define RECYCLE_ON_TIME 5
+#define RECYCLE_USED 180
+#define RECYCLE_END 0
+
 // Celebrate
 #define STRETCHBREAK_TIME_REACHED 0
 #define STRETCHBREAK_NOT_YET 90
@@ -116,6 +121,7 @@ public:
 	void UmbrellaExecution(String JSONData);
 	void StretchBreakExecution(String JSONData);
 	void RocketExecution(String JSONData);
+	void RecycleExecution(String JSONData);
 	void TestSignalExecution(String JSONData);
 	void StockExecution(String JSONData);
 	void CustomExecution(String JSONData);
